@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.firebase.com/libs/firebaseui/2.7.0/firebaseui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flamelink/dist/flamelink.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/bugReport.js"></script>
+  <script src="js/backend.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    ons.ready(function() {
+      console.log("Onsen UI is ready!");
+      funcBackend("home");
+    });
+
+    window.fn = {};
+    window.fn.open = function() {
+      var menu = document.getElementById('menu');
+      menu.open();
+    };
+    window.fn.load = function(page) {
+      var content = document.getElementById('content');
+      var menu = document.getElementById('menu');
+      content
+        .load(page)
+        .then(menu.close.bind(menu))
+        .then(funcBackend(page.replace(".html", "")));
+    };
+
+  </script>
+</head>
+<body>
+  <!-- Below is the code for the side menu. All other code is found in its respective pages -->
+  <ons-splitter>
+    <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+      <ons-page>
+          <!-- <div class="profile-pic" onclick="fn.load('account.html')"> -->  
+          <div class="profile-pic">
+            <img id= "fbla-logo" src="images/FBLA-PBL_registered.png">
+            <img id="school-image" src="images/nhs.png">
+            <h5 id="school-name">
+              Northview High School
+            </h5>
+          </div>
+        <ons-list>
+          <ons-list-item onclick="fn.load('home.html')" tappable>
+            Home
+          </ons-list-item>
+          <ons-list-item onclick="fn.load('competition.html')" tappable>
+            Competition
+          </ons-list-item>
+          <ons-list-item onclick="fn.load('conference.html')" tappable>
+            Conference
+          </ons-list-item>
+          <ons-list-item onclick="fn.load('baAs.html')" tappable>
+            BAAs
+          </ons-list-item>
+          <ons-list-item onclick="fn.load('about.html')" tappable>
+            About
+          </ons-list-item>
+        </ons-list>
+        <ons-list-title>Settings</ons-list-title>
+        <ons-list>
+            <ons-list-item onclick="fn.load('help.html')" tappable>
+              Help
+            </ons-list-item>
+            <ons-list-item onclick="bugReport()" tappable>
+              Questions?
+            </ons-list-item>
+        </ons-list>
+
+        <ons-speed-dial position="bottom right" direction="up" :open.sync="spdOpen">
+          <ons-fab>
+            <ons-icon icon="md-share"></ons-icon>
+          </ons-fab>
+          <ons-speed-dial-item onclick="window.plugins.socialsharing.share('Join FBLA and become a business leader today!', 'FBLA Northview', 'http://georgiafbla.org/wp-content/uploads/2015/06/ga-logo-sq-5588d0ecv1_site_icon.png', 'https://northviewfbla.weebly.com/')">
+            <ons-icon icon="md-share"></ons-icon>
+          </ons-speed-dial-item>
+          <ons-speed-dial-item onclick="fn.loadLink('https://northviewfbla.weebly.com/')">
+            <ons-icon icon="fa-chrome"></ons-icon>
+          </ons-speed-dial-item>
+          <ons-speed-dial-item onclick="fn.loadLink('https://www.instagram.com/northviewfbla/')">
+            <ons-icon icon="md-instagram"></ons-icon>
+          </ons-speed-dial-item>
+        </ons-speed-dial>
+
+      </ons-page>
+    </ons-splitter-side>
+    <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+  </ons-splitter>
+</body>
+</html>
